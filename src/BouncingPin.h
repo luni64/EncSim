@@ -11,7 +11,7 @@ public:
     {
         pinMode(pin, OUTPUT);
         digitalWriteFast(pin, LOW);
-        TeensyDelay::addDelayChannel(bounce, channel);
+        TeensyDelay::addDelayChannel(bounce, channel);     // see luni64/TeensyDelay for info about this library
     }
 
     void toggle()
@@ -34,15 +34,16 @@ private:
     {
         static unsigned time = 0;
 
-        if (time < totalBounceTime) {
-            digitalWriteFast(pin, !digitalReadFast(pin));
-            int curBounceTime = random(minBounceTime, maxBounceTime);
-            time += curBounceTime;
-            TeensyDelay::trigger(curBounceTime, channel);
+        if (time < totalBounceTime)                                     // do we need another bounce peak? 
+        {
+            digitalWriteFast(pin, !digitalReadFast(pin));               // toggle pin
+            int curBounceTime = random(minBounceTime, maxBounceTime);   // get random time for this peak
+            time += curBounceTime;                                                  
+            TeensyDelay::trigger(curBounceTime, channel);                // retrigger the delay channel
         }
-        else {
-            digitalWriteFast(pin, targetState);
-            time = 0;
+        else {                                                           // bounce time over           
+            digitalWriteFast(pin, targetState);                          // we always end with the target level           
+            time = 0;       	                                         // prepare for next bouncing    
         }
     }
 };
