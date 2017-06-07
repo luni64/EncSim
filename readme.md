@@ -1,12 +1,13 @@
-## Content
- - [EncSim Libary](#encsim)
-    -  [Key Features](#key_features)
-    -  [Usage](#usage)
- - [Serial Interface](#serial_interface)
- 
 # EncSim
-Generates a quadrature signal for testing quadrature encoder libraries and/or hardware. The library can also be used to set up a automated testing environment.
-The examples include a convenient [serial interface](#serial_interface) to control the signal generation. 
+
+- [Description](#description)
+  - [Key Features](#key_features)
+  - [Usage](#usage)
+ - [Serial Interface](#serial_interface)
+
+## Description 
+EncSim can be used to generate a quadrature signal with adjustable count rate, phase and bouncing.The signal can be used for testing quadrature encoder libraries and/or hardware in a manaual or automated test environment. 
+The example folder also includes a convenient [serial interface](#serial_interface) to control the signal generation from a terminal. (E.g., [TyCommander](#https://github.com/Koromix/tytools) or the Arduino serial monitor). 
 
 ## Key Features
 - Count rate adjustable from 1Hz up to 1.4 MHz (Teensy 3.6 @240MHz, F_BUS 90MHz)
@@ -23,6 +24,7 @@ Basic usage of the library
 #include <EncSim.h>
 
 EncSim<0,1> simulator;       // use pin 0 and pin 1 as output
+
 void setup() {
   simulator.begin();
 
@@ -30,6 +32,8 @@ void setup() {
   .setFrequency(150)          // 150Hz count rate
   .setPhase(90)               // normal 90° phase shift
   .setTotalBounceDuration(0); // no bouncing
+  
+  simulator.moveRel(100);     // generate 100 counts
 }
 ```
 The following settings are available for the *EncSim* class:
