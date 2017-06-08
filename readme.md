@@ -4,10 +4,10 @@
 - [API](#api)
 
 ## Library Description 
-EncSim can be used for testing encoder libraries and/or hardware in a manual or automated test environment. It simulates signals from optical or mechanical incremental [encoders](https://en.wikipedia.org/wiki/Rotary_encoder#Incremental_rotary_encoder) (quadrature signals). You can set the **direction**, **count rate** and the **phase** of the generated signal. For simulating mechanical encoders you can add  random [**contact bouncing**](https://en.wikipedia.org/wiki/Switch#Contact_bounce) (aka chatter) to the signal. EncSym uses [TeensyDelay](https://github.com/luni64/TeensyDelay) for generation of the random bounce peaks.
+EncSim can be used for testing encoder libraries and/or hardware in a manual or automated test environment. It generates a quadrature signal which simulates optical or mechanical incremental [encoders](https://en.wikipedia.org/wiki/Rotary_encoder#Incremental_rotary_encoder). You can set the **direction**, **count rate** and the **phase** of the generated signal. For simulating mechanical encoders you can add  random [**contact bouncing**](https://en.wikipedia.org/wiki/Switch#Contact_bounce) (aka chatter) to the signal. EncSym uses [TeensyDelay](https://github.com/luni64/TeensyDelay) for generation of the random bounce peaks.
 
 ### Key Features
-- Easy to use control interface via a serial terminal.
+- Easy to use interface to control signal generation with a serial terminal.
 - Count rate adjustable from 1Hz up to 1.4 MHz.
 - Signal phase adjustable from 90° (standard) to 10°.
 - Bouncing:
@@ -17,8 +17,7 @@ EncSim can be used for testing encoder libraries and/or hardware in a manual or 
 - Programming API for use in own sketches, automated tests or simular applications.
 
 **Precompiled Firmware** 
-If you just want to use EncSym for testing your encoder library you do not need to install EncSim. Instead, you can download compiled hex files for the serial command interface. Just upload it, open a serial terminal (arduinos serial monitor, [TyCommander](https://github.com/Koromix/tytools),  [PuTTY](http://www.putty.org/), ...) and start testing. 
-[Link to firmware download](https://github.com/luni64/EncSim/releases)
+If you just want to use EncSym for testing your encoder library you do not need to install EncSim. If you want you can download compiled hex files for the serial command interface instead. Just upload it, open a serial terminal (arduinos serial monitor, [TyCommander](https://github.com/Koromix/tytools),  [PuTTY](http://www.putty.org/), ...) and start testing. Hera a link to the [firmware download](https://github.com/luni64/EncSim/releases) page.
 
 ### Examples of generated signals
 **Bouncing:** 
