@@ -39,7 +39,7 @@ The last example shows maximum possible pulsrate of 1.4 MHz. You need a T3.6 @24
 ![100kHz, 45deg](/media/1_4MHz.PNG?raw=true)
 
 # Serial Interface
-The signal generation can be controlled by an easy to use serial interface. You can use the Aduino serial monitor,  [TyCommander](#https://github.com/Koromix/tytools) or any other serial terminal to send commands to EncSim. Internally the serial inteface uses Kroimons [SerialCommand](https://github.com/kroimon/Arduino-SerialCommand) lib.
+The signal generation can be controlled by an easy to use serial interface. You can use the Aduino serial monitor,  [TyCommander](https://github.com/Koromix/tytools) or any other serial terminal to send commands to EncSim. Internally the serial inteface uses Kroimons [SerialCommand](https://github.com/kroimon/Arduino-SerialCommand) lib.
 
 Typing in *help* or *?* in the terminal shows a list of all available commands:
 
