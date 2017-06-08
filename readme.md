@@ -1,9 +1,9 @@
 # Work in progress
 
 # EncSim
-- [Library Description](#description)
-- [Serial Interface](#serial_interface)
-- [API](API)
+- [Library Description](#library-description)
+- [Serial Interface](#serial-interface)
+- [API](#api)
 
 
 ## Library Description 
