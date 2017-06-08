@@ -13,15 +13,15 @@
 EncSim can be used to simulate signals from optical or mechanical incremental [encoders](https://en.wikipedia.org/wiki/Rotary_encoder#Incremental_rotary_encoder) (quadrature signals). You can adjust the generated **count rate** and the **phase** of the signal. For simulating mechanical encoders you can also add adjustable [**contact bouncing**](https://en.wikipedia.org/wiki/Switch#Contact_bounce) (aka chatter) to the signal.
 The signal can be used for testing quadrature encoder libraries and/or hardware in a manaual or automated test environment.
 
-## Key Features
-- Interface for control via a serial terminal available
-- Count rate adjustable from 1Hz up to 1.4 MHz (Teensy 3.6 @240MHz, F_BUS 90MHz)
-- Signal phase adjustable from 90° (standard) to 10°
-- Random bouncing
--- total bounce time - adjustable
--- minimum width of bounce peaks - adjustable
--- maximum width of bouce peaks - adjustable
-- Programming API for use in test automation or simular applications available
+### Key Features
+- Easy to use control interface via a serial terminal available.
+- Count rate adjustable from 1Hz up to 1.4 MHz (Teensy 3.6 @240MHz, F_BUS 120MHz).
+- Signal phase adjustable from 90° (standard) to 10°.
+- Random bouncing:
+  - Total bounce time adjustable.
+  - Minimum width of bounce peaks adjustable.
+  - Maximum width of bouce peaks - adjustable.
+- Programming API for use in automated tests or simular applications available.
 
 **A few examples of generated signals:**
 **Bouncing:** 
