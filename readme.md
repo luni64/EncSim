@@ -3,10 +3,7 @@
 # EncSim
 - [Library Description](#description)
 - [Serial Interface](#serial_interface)
-    - Usage
-    - Commands
-    - Examples
-- [API]()
+- [API](API)
 
 
 ## Library Description 
@@ -42,26 +39,33 @@ The last example shows maximum possible pulsrate of 1.4 MHz. You need a T3.6 @24
 ![100kHz, 45deg](/media/1_4MHz.PNG?raw=true)
 
 # Serial Interface
-The signal generation can be controlled via an easy to use serial interface. You can use the Aduino serial monitor,  [TyCommander](#https://github.com/Koromix/tytools) or any other serial terminal to send commands to EncSim. Internally the serial inteface uses Kroimons [SerialCommand](https://github.com/kroimon/Arduino-SerialCommand) lib.
+The signal generation can be controlled by an easy to use serial interface. You can use the Aduino serial monitor,  [TyCommander](#https://github.com/Koromix/tytools) or any other serial terminal to send commands to EncSim. Internally the serial inteface uses Kroimons [SerialCommand](https://github.com/kroimon/Arduino-SerialCommand) lib.
 
 Typing in *help* or *?* in the terminal shows a list of all available commands:
+
 ![help output](/media/interface.PNG?raw=true)
 
+**Commands:**
 
+- The *up* and *down* commands generate a continous signal until you send the *stop* command. The current position is printed during the movement.
+- *mva* and *mvr* move to a given absolute or relative position respectively. Current position is printed during amd after the move.
+- Each move command can be intercepted by *stop* or other move commands. E.g., sending *up* followed by *down* will change the direction immediately. Sending *up* followed by *mva 0* will change direction and move back to position 0.
+- *getpos* and *setpos* get and set the internal counter value
+- *freq*, *phase*, *btot*, *bmin* and *bmax* set pulse rate, phase, total bounce time, minimal and maximal bounce pulse width respectively.
+- *print* shows the current settings. The library clips the frequency and phase settings if the requested signal can not be generated with the given board. It is a good idea to check the actual settings with *print* if you use high frequencies or small phases values.
 
-
-## Usage
-Basic usage of the library
+# API
+Using EncSim from your sketches without the serial interface is easy:
 ```c++
 #include <TeensyDelay.h>
 #include <EncSim.h>
 
-EncSim<0,1> simulator;       // use pin 0 and pin 1 as output
+EncSim<0,1> simulator;       // use pin 0 and pin 1 as output (any two digital pins can be used)
 
 void setup() {
   simulator.begin();
 
-  simulator
+  simulator                   // settings can be done by a "fluent interface"
   .setFrequency(150)          // 150Hz count rate
   .setPhase(90)               // normal 90° phase shift
   .setTotalBounceDuration(0); // no bouncing
@@ -69,7 +73,7 @@ void setup() {
   simulator.moveRel(100);     // generate 100 counts
 }
 ```
-The following settings are available for the *EncSim* class:
+The following settings are available
 ```c++
 setFrequency(Hz)            // pulse rate in Hz (1-f_max), f_max depends on board and F_BUS settings
 setPhase(deg)               // signal phase in deg (10-90)
@@ -86,6 +90,5 @@ moveRes(delta)              // moves relative to current position, blocks until 
 stop()                      // stops movement immediately
 bool isRunning()            // true if simulator is currently moving
 ```
-# Serial Interface
-tbd
+
 
