@@ -36,12 +36,17 @@ The follwing image shows the genenrated signal for a pulse rate of 100kHz and a 
 ![100kHz, 45deg](/media/100kHz45deg.PNG?raw=true "100KHz, 45deg")
 
 **Maximum Pulse Rate:**
+
 The last example shows maximum possible pulsrate of 1.4 MHz. You need a T3.6 @240MHz with F_BUS=120MHz to be able to get such high pulse rates.
 
-![100kHz, 45deg](/media/1_4MHz.PNG?raw=true "100KHz, 45deg")
+![100kHz, 45deg](/media/1_4MHz.PNG?raw=true)
 
 # Serial Interface
-The example folder also includes a convenient [serial interface](#serial_interface) to control the signal generation from a terminal. (E.g., [TyCommander](#https://github.com/Koromix/tytools) or the Arduino serial monitor). 
+The signal generation can be controlled via an easy to use serial interface. You can use the Aduino serial monitor,  [TyCommander](#https://github.com/Koromix/tytools) or any other serial terminal to send commands to EncSim. Internally the serial inteface uses Kroimons [SerialCommand](https://github.com/kroimon/Arduino-SerialCommand) lib.
+
+Typing in *help* or *?* in the terminal shows a list of all available commands:
+![help output](/media/interface.PNG?raw=true)
+
 
 
 
