@@ -14,15 +14,17 @@ EncSim can be used to simulate signals from optical or mechanical incremental [e
 The signal can be used for testing quadrature encoder libraries and/or hardware in a manaual or automated test environment.
 
 **Here a few examples:**
-The next two images show a simulation for a mechanical encoder. The pulse rate was set to 50Hz and a total bounce time of 5 ms was choosen. The min and max duration of the bounce pulses was set to 20µs and 500µs respectively.
+
+The next two images show a simulation for a mechanical encoder. The pulse rate was set to 50Hz and a total bounce time of 5 ms was choosen. The min and max duration of the bounce pulses was set to 20µs and 500µs respectively. First picture shows an overview, second picture shows the same data zoomed in.
+
 ![50Hz with enabled bouncing](/media/50Hz_bounce5000_20_500.PNG?raw=true "50 Hz bouncing")
 ![50Hz with enabled bouncing](/media/50Hz_bounce5000_20_500_zoom.PNG?raw=true "50 Hz bouncing")
 
 The follwing image shows the genenrated signal for a pulse rate of 100kHz and a signal phase of 45°
-![100kHz, 45deg](/media/100kHZ45deg.PNG?raw=true "100KHz, 45deg")
+![100kHz, 45deg](/media/100kHz45deg.PNG?raw=true "100KHz, 45deg")
 
 The last example shows maximum possible pulsrate of 1.4 MHz. This was generated using a T3.6 @240MHz with F_BUS=120MHz. 
-![100kHz, 45deg](/media/100kHZ45deg.PNG?raw=true "100KHz, 45deg")
+![100kHz, 45deg](/media/1_4MHz.PNG?raw=true "100KHz, 45deg")
 
 
  
