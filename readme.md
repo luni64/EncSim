@@ -17,7 +17,7 @@ EncSim can be used for testing the performance of encoder libraries and/or hardw
 - Programming API for use in own sketches, automated tests or simular applications.
 
 **Precompiled Firmware** 
-If you just want to use EncSym for testing your encoder library you do not need to install EncSim. If you want you can download compiled hex files for the serial command interface instead. Just upload it, open a serial terminal (arduinos serial monitor, [TyCommander](https://github.com/Koromix/tytools),  [PuTTY](http://www.putty.org/), ...) and start testing. Hera a link to the [firmware download](https://github.com/luni64/EncSim/releases) page.
+If you just want to use EncSym for testing your encoder library you do not need to install EncSim. You can download precompiled hex files for various Teensy boards instead. Just upload the firmware, open a serial terminal (arduinos serial monitor, [TyCommander](https://github.com/Koromix/tytools),  [PuTTY](http://www.putty.org/), ...) and start testing. Hera a link to the [firmware download](https://github.com/luni64/EncSim/tree/master/bin) page.
 
 ### Examples of generated signals
 **Bouncing:** 
