@@ -20,6 +20,9 @@ The signal can be used for testing quadrature encoder libraries and/or hardware 
   - Maximum width of bouce peaks - adjustable.
 - Programming API for use in automated tests or simular applications available.
 
+**Firmware** 
+If you do not want to install EncSim you can download compiled hex files for the serial command interface [here](https://github.com/luni64/EncSim/releases)
+
 **A few examples of generated signals:**
 **Bouncing:** 
 The next two images show the simulation of a mechanical encoder. The pulse rate was set to 50Hz and a total bounce time of 5 ms was choosen. The min and max duration of the bounce pulses was set to 20µs and 500µs respectively. First picture shows an overview, second picture shows the same data but zoomed in.
