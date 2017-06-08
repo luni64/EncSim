@@ -6,10 +6,11 @@
 
 ## Library Description 
 EncSim can be used to simulate signals from optical or mechanical incremental [encoders](https://en.wikipedia.org/wiki/Rotary_encoder#Incremental_rotary_encoder) (quadrature signals). You can adjust the generated **count rate** and the **phase** of the signal. For simulating mechanical encoders you can also add adjustable [**contact bouncing**](https://en.wikipedia.org/wiki/Switch#Contact_bounce) (aka chatter) to the signal.
-The library can be used for testing encoder libraries and/or hardware in a manaual or automated test environment.
+The library can be used for testing encoder libraries and/or hardware in a manual or automated test environment.
+EncSym uses [TeensyDelay](https://github.com/luni64/TeensyDelay) for generation of the random bounce peaks.
 
 ### Key Features
-- Easy to use control interface via a serial terminal available.
+- Easy to use control interface via a serial terminal.
 - Count rate adjustable from 1Hz up to 1.4 MHz (Teensy 3.6 @240MHz, F_BUS 120MHz).
 - Signal phase adjustable from 90° (standard) to 10°.
 - Random bouncing:
@@ -21,7 +22,7 @@ The library can be used for testing encoder libraries and/or hardware in a manau
 **Firmware** 
 If you do not want to install EncSim you can download compiled hex files for the serial command interface [here](https://github.com/luni64/EncSim/releases)
 
-### A few examples of generated signals
+### Examples of generated signals
 **Bouncing:** 
 The next two images show the simulation of a mechanical encoder. The pulse rate was set to 50Hz and a total bounce time of 5 ms was choosen. The min and max duration of the bounce pulses was set to 20µs and 500µs respectively. First picture shows an overview, second picture shows the same data but zoomed in.
 
@@ -35,18 +36,18 @@ The follwing image shows the genenrated signal for a pulse rate of 100kHz and a 
 
 **Maximum Pulse Rate:**
 
-The last example shows maximum possible pulsrate of 1.4 MHz. You need a T3.6 @240MHz with F_BUS=120MHz to be able to get such high pulse rates.
+The last example shows a signal with the maximum possible pulsrate of 1.4 MHz. (You need a T3.6 @240MHz with F_BUS=120MHz to be able to get such high pulse rates.)
 
 ![100kHz, 45deg](/media/1_4MHz.PNG?raw=true)
 
 # Serial Interface
-The signal generation can be controlled by an easy to use serial interface. You can use the Aduino serial monitor,  [TyCommander](https://github.com/Koromix/tytools) or any other serial terminal to send commands to EncSim. Internally the serial inteface uses Kroimons [SerialCommand](https://github.com/kroimon/Arduino-SerialCommand) lib.
+The signal generation can be controlled by an easy to use serial interface. You can use the Aduino serial monitor,  [TyCommander](https://github.com/Koromix/tytools) or any other serial terminal to send commands to EncSim. Internally the serial inteface uses Kroimons [SerialCommand](https://github.com/kroimon/Arduino-SerialCommand) lib. The sketch for the serial interface can be found in the examples section of this repo.
+
+**Commands:**
 
 Typing in *help* or *?* in the terminal shows a list of all available commands:
 
 ![help output](/media/interface.PNG?raw=true)
-
-**Commands:**
 
 - The *up* and *down* commands generate a continous signal until you send the *stop* command. The current position is printed during the movement.
 - *mva* and *mvr* move to a given absolute or relative position respectively. Current position is printed during amd after the move.
