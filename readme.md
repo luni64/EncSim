@@ -6,7 +6,7 @@
 
 ## Library Description 
 EncSim can be used to simulate signals from optical or mechanical incremental [encoders](https://en.wikipedia.org/wiki/Rotary_encoder#Incremental_rotary_encoder) (quadrature signals). You can adjust the generated **count rate** and the **phase** of the signal. For simulating mechanical encoders you can also add adjustable [**contact bouncing**](https://en.wikipedia.org/wiki/Switch#Contact_bounce) (aka chatter) to the signal.
-The signal can be used for testing quadrature encoder libraries and/or hardware in a manaual or automated test environment.
+The library can be used for testing encoder libraries and/or hardware in a manaual or automated test environment.
 
 ### Key Features
 - Easy to use control interface via a serial terminal available.
