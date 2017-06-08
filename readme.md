@@ -4,7 +4,7 @@
 - [API](#api)
 
 ## Library Description 
-EncSim can be used for testing encoder libraries and/or hardware in a manual or automated test environment. It generates a quadrature signal which simulates optical or mechanical incremental [encoders](https://en.wikipedia.org/wiki/Rotary_encoder#Incremental_rotary_encoder). You can set the **direction**, **count rate** and the **phase** of the generated signal. For simulating mechanical encoders you can add  random [**contact bouncing**](https://en.wikipedia.org/wiki/Switch#Contact_bounce) (aka chatter) to the signal. EncSym uses [TeensyDelay](https://github.com/luni64/TeensyDelay) for generation of the random bounce peaks.
+EncSim can be used for testing the performance of encoder libraries and/or hardware in a manual or automated test environment. It generates a quadrature signal which simulates optical or mechanical incremental [encoders](https://en.wikipedia.org/wiki/Rotary_encoder#Incremental_rotary_encoder). You can adjust the **direction**, **count rate** and the **phase** of the generated signal. For simulating mechanical encoders you can add  random [**contact bouncing**](https://en.wikipedia.org/wiki/Switch#Contact_bounce) (aka chatter) peaks to the signal. EncSym uses [TeensyDelay](https://github.com/luni64/TeensyDelay) for generation of the random bounce peaks.
 
 ### Key Features
 - Easy to use interface to control signal generation with a serial terminal.
