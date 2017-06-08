@@ -1,12 +1,23 @@
-# EncSim
+# Work in progress
 
-- [Description](#description)
+# EncSim
+- [Library Description](#description)
+    - [Key Features](#key_features)
+- [Serial Interface](#serial_interface)
+    - Usage
+    - Commands
+    - Examples
+- [API]()
   - [Key Features](#key_features)
   - [Usage](#usage)
- - [Serial Interface](#serial_interface)
+ 
 
 ## Description 
-EncSim can be used to generate a quadrature signal with adjustable count rate, phase and bouncing.The signal can be used for testing quadrature encoder libraries and/or hardware in a manaual or automated test environment. 
+EncSim can be used to simulate signals from optical or mechanical encoders (quadrature signals). You can adjust the generated **count rate** and the **phase** of the signal. For simulating mechanical encoders you can also add adjustable [**contact bouncing**](https://en.wikipedia.org/wiki/Switch#Contact_bounce) (aka chatter) to the signal.
+
+
+
+The signal can be used for testing quadrature encoder libraries and/or hardware in a manaual or automated test environment. 
 The example folder also includes a convenient [serial interface](#serial_interface) to control the signal generation from a terminal. (E.g., [TyCommander](#https://github.com/Koromix/tytools) or the Arduino serial monitor). 
 
 ## Key Features
