@@ -18,10 +18,10 @@ public:
 
         // defaults
         setFrequency(50);               // Quadrature signal with
-        setPhase(90);                   // 50Hz and 90° phase    
-        setTotalBounceDuration(5000);   // 1ms bouncing
+        setPhase(90);                   // 50Hz and 90Â° phase    
+        setTotalBounceDuration(5000);   // 5ms bouncing
         setBounceDurationMax(300);      // bounce peaks between
-        setBounceDurationMin(30);       // 20 and 300µs      
+        setBounceDurationMin(30);       // 30 and 300Âµs      
 
         current = 0;                    // reset counter
     }
@@ -74,7 +74,7 @@ public:
 
     void pitISR()
     {  
-        mainTimer.setReloadValue(T[current & 1]);  //T0 / T1 differ if phase != 90°
+        mainTimer.setReloadValue(T[current & 1]);  //T0 / T1 differ if phase != 90Â°
 
         //generate quadrature signal 
         if (current & 1) {
