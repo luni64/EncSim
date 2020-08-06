@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TeensyDelay.h>
+//#include <TeensyDelay.h>
 #include "wprogram.h"
 
 template<unsigned pin, unsigned channel>
@@ -11,7 +11,7 @@ public:
     {
         pinMode(pin, OUTPUT);
         digitalWriteFast(pin, LOW);
-        TeensyDelay::addDelayChannel(bounce, channel);     // see luni64/TeensyDelay for info about this library
+        //TeensyDelay::addDelayChannel(bounce, channel);     // see luni64/TeensyDelay for info about this library
     }
 
     void toggle()
@@ -39,7 +39,7 @@ private:
             digitalWriteFast(pin, !digitalReadFast(pin));               // toggle pin
             int curBounceTime = random(minBounceTime, maxBounceTime);   // get random time for this peak
             time += curBounceTime;                                                  
-            TeensyDelay::trigger(curBounceTime, channel);                // retrigger the delay channel
+            //TeensyDelay::trigger(curBounceTime, channel);                // retrigger the delay channel
         }
         else {                                                           // bounce time over           
             digitalWriteFast(pin, targetState);                          // we always end with the target level           

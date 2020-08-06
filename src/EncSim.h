@@ -1,8 +1,9 @@
 #pragma once
 
-#include <TeensyDelay.h>
+//#include <TeensyDelay.h>
 #include "BouncingPin.h"
 #include "PIT.h"
+#include "TeensyTimerTool.h"
 
 template<int A, int B>
 class EncSim : IPitHandler
@@ -11,7 +12,7 @@ public:
     void begin()
     {
         mainTimer.begin(this, 16);
-        TeensyDelay::begin();
+        //TeensyDelay::begin();
 
         phaseA.begin();
         phaseB.begin();

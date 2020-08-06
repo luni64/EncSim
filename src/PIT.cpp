@@ -2,6 +2,8 @@
 #include "HardwareSerial.h"
 #include "Arduino.h"
 
+#include "TeensyTimerTool.h"
+
 
 namespace
 {
