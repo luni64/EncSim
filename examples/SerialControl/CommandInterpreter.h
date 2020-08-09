@@ -1,170 +1,159 @@
 #pragma once
 
+#include "EncSim.h"
 #include "SerialCommand.h"
 #include "StateMachine.h"
 
-template<class EncSim>
 class CommandInterpreter
 {
-public:
+ public:
+    CommandInterpreter(SimulatorStateMachine* statemachine) : sm(statemachine){}
+
     void begin()
     {
-        serialCommand.addCommand("mva", mva);
-        serialCommand.addCommand("mvr", mvr);
-        serialCommand.addCommand("up", up);
-        serialCommand.addCommand("down", down);
-        serialCommand.addCommand("stop", stop);
-        serialCommand.addCommand("getpos", getpos);
-        serialCommand.addCommand("setpos", setpos);
-        serialCommand.addCommand("freq", freq);
-        serialCommand.addCommand("phase", phase);
-        serialCommand.addCommand("btot", btotal);
-        serialCommand.addCommand("bmin", bmin);
-        serialCommand.addCommand("bmax", bmax);
+        serialCommand.addCommand("mva",  [this] { this->mva(); });
+        serialCommand.addCommand("mvr",  [this] { this->mvr(); });
+        serialCommand.addCommand("up",   [this] { this->up(); });
+        serialCommand.addCommand("down", [this] { this->down(); });
+        serialCommand.addCommand("stop", [this] { this->stop(); });
+        serialCommand.addCommand("getpos", [this] { this->getpos(); });
+        serialCommand.addCommand("setpos", [this] { this->setpos(); });
+        serialCommand.addCommand("freq", [this] { this->freq(); });
+        serialCommand.addCommand("phase", [this] { this->phase(); });
+        serialCommand.addCommand("btot", [this] { this->btotal(); });
+        serialCommand.addCommand("bmin", [this] { this->bmin(); });
+        serialCommand.addCommand("bmax", [this] { this->bmax(); });
 
-        serialCommand.addCommand("print", print);
-        serialCommand.addCommand("help", help);
-        serialCommand.addCommand("?", help);
+        serialCommand.addCommand("print", [this] { this->print(); });
+        serialCommand.addCommand("help", [this] { this->help(); });
+        serialCommand.addCommand("?", [this] { this->help(); });
+        serialCommand.setDefaultHandler([](const char* cmd){Serial.printf("Command Error: %s\n", cmd);});
 
-        serialCommand.setDefaultHandler(unrecognized);
-        sm.begin();
+        help();
+
+        sm->begin();
     }
 
     void tick()
     {
         serialCommand.readSerial();
-        sm.tick();     
+        sm->tick();
     }
 
-private:
-    static void unrecognized(const char *command) { Serial.printf("Command Error: %s\n", command); }
-    static void mva();
-    static void mvr();
-    static void up();
-    static void down();
-    static void stop();
-    static void getpos();
-    static void setpos();
-    static void freq();
-    static void phase();
-    static void btotal();
-    static void bmin();
-    static void bmax();
-    static void print();
-    static void help();
-            
-    static SerialCommand serialCommand;
-    static SimulatorStateMachine<EncSim> sm;
- 
-    static int getIntParam()
+ private:
+    void mva();
+    void mvr();
+    void up();
+    void down();
+    void stop();
+    void getpos();
+    void setpos();
+    void freq();
+    void phase();
+    void btotal();
+    void bmin();
+    void bmax();
+    void print();
+    void help();
+
+    SerialCommand serialCommand;
+
+    SimulatorStateMachine* sm;
+
+    int getIntParam()
     {
-        char *param = serialCommand.next();
+        char* param = serialCommand.next();
         return param != NULL ? atoi(param) : 0;
-    }  
+    }
 };
 
-
-template<class Simulator>
-void CommandInterpreter<Simulator>::mva()
+void CommandInterpreter::mva()
 {
     int target = getIntParam();
     Serial.printf("> mva %d\n", target);
-    sm.moveAbs(target);
+    sm->moveAbs(target);
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::mvr()
+void CommandInterpreter::mvr()
 {
     int delta = getIntParam();
     Serial.printf("> mvr %d\n", delta);
-    sm.moveRel(delta);
+    sm->moveRel(delta);
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::up()
+void CommandInterpreter::up()
 {
     Serial.printf("> up\n");
-    sm.moveUp();
+    sm->moveUp();
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::down()
+void CommandInterpreter::down()
 {
     Serial.printf("> down\n");
-    sm.moveDown();
+    sm->moveDown();
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::stop()
-{   
+void CommandInterpreter::stop()
+{
     Serial.printf("> stop\n");
-    sm.stop();
+    sm->stop();
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::getpos()
+void CommandInterpreter::getpos()
 {
     Serial.printf("> getpos\n");
-    sm.getCount();
+    sm->getCount();
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::setpos()
+void CommandInterpreter::setpos()
 {
     int cnt = getIntParam();
-    Serial.printf("> setpos %d\n",cnt);    
-    sm.setCount(cnt);
+    Serial.printf("> setpos %d\n", cnt);
+    sm->setCount(cnt);
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::freq()
+void CommandInterpreter::freq()
 {
     int freq = getIntParam();
     Serial.printf("> freq %d\n", freq);
-    sm.setFrequency(freq);
+    sm->setFrequency(freq);
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::phase()
+void CommandInterpreter::phase()
 {
     int phase = getIntParam();
     Serial.printf("> phase %d\n", phase);
-    sm.setPhase(phase);
+    sm->setPhase(phase);
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::btotal()
+void CommandInterpreter::btotal()
 {
     int t = getIntParam();
     Serial.printf("> btotal %d\n", t);
-    sm.setBounceTotal(t);
+    sm->setBounceTotal(t);
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::bmin()
+void CommandInterpreter::bmin()
 {
     int t = getIntParam();
     Serial.printf("> bmin %d\n", t);
-    sm.setBounceMin(t);
+    sm->setBounceMin(t);
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::bmax()
+void CommandInterpreter::bmax()
 {
     int t = getIntParam();
     Serial.printf("> bmax %d\n", t);
-    sm.setBounceMax(t);
+    sm->setBounceMax(t);
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::print()
+void CommandInterpreter::print()
 {
     Serial.printf("> print\n");
-    sm.print();
+    sm->print();
 }
 
-template<class Simulator>
-void CommandInterpreter<Simulator>::help()
+void CommandInterpreter::help()
 {
     Serial.println("\nUsage");
     Serial.println("  mva pos    Move to absolute position");
@@ -181,13 +170,8 @@ void CommandInterpreter<Simulator>::help()
     Serial.println("  bmax       Set longest duration of bouncing peaks; unit: \u00B5s, default: 1000");
     Serial.println("  print      Print settings");
     Serial.println();
-
 }
 
+// SerialCommand CommandInterpreter::serialCommand;
 
-template<class Simulator>
-SerialCommand CommandInterpreter<Simulator>::serialCommand;
-
-template<class Simulator>
-SimulatorStateMachine<Simulator> CommandInterpreter<Simulator>::sm;
-
+// SimulatorStateMachine CommandInterpreter::sm;
