@@ -2,11 +2,12 @@
 
 #include "BouncingPin.h"
 #include "TeensyTimerTool.h"
+#include <algorithm>
 
 class EncSim
 {
  public:
-    EncSim(unsigned pinA, unsigned pinB);
+    EncSim(unsigned pinA, unsigned pinB, int pinZ=-1);    
 
     void begin();
 
@@ -22,6 +23,7 @@ class EncSim
 
     //settings----------------------------------------------------
     EncSim& setFrequency(float f_Hz);
+    EncSim& setPeriod(unsigned p);
     EncSim& setPhase(float deg);
     EncSim& setCountRate(float f_Hz, float phase_deg = 90.0);
     EncSim& setTotalBounceDuration(unsigned microseconds);
@@ -34,14 +36,20 @@ class EncSim
 
     void pitISR()
     {
+        current += direction;
+
+        if (Z > 0)
+        {
+            digitalWriteFast(Z, ((current  - 2) % period) == 0);  // current-2 to have the zero pulse on the rising edge of B
+        }
+
         if (current & 1)
         {
             direction == 1 ? phaseA.toggle() : phaseB.toggle();
         } else
         {
             direction == 1 ? phaseB.toggle() : phaseA.toggle();
-        }
-        current += direction;
+        }      
 
         if (current == target)
         {
@@ -58,6 +66,8 @@ class EncSim
 
     const unsigned A;
     const unsigned B;
+    const int Z;
+    unsigned period = 100;
 
     BouncingPin phaseA;
     BouncingPin phaseB;
