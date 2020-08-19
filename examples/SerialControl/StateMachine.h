@@ -97,6 +97,12 @@ class SimulatorStateMachine
         currentState(doSetBounceMin);
     }
 
+    void setPeriod(int p)
+    {
+        intParam1 = p;
+        currentState(doSetPeriod);
+    }
+
     void tick()
     {
         currentState(doTick);
@@ -114,6 +120,7 @@ class SimulatorStateMachine
         doSetBounceTime,
         doSetBounceMin,
         doSetBounceMax,
+        doSetPeriod,
         doHelp,
         doPrintSettings,
         finished,
@@ -165,6 +172,10 @@ class SimulatorStateMachine
 
             case doSetBounceMax:
                 simulator->setBounceDurationMax(intParam1);
+                break;
+
+            case doSetPeriod:
+                simulator->setPeriod(intParam1);
                 break;
 
             case doPrintSettings:

@@ -2,13 +2,13 @@
 #include "EncSim.h"
 #include "TeensyTimerTool.h"
 
-auto* simulator    = new EncSim(0, 1); //sets up pins 0 and 1 as output for the quadrature signal
+auto* simulator    = new EncSim(0, 1, 2); // A=0, B=1, Z=2
 auto* stateMachine = new SimulatorStateMachine(simulator);
 auto* interpreter  = new CommandInterpreter(stateMachine);
 
 void setup()
 {
-    while (!Serial){}
+    while (!Serial) {}
 
     Serial.println("EncSim, Encoder Simulator v2.0.0.0");
     Serial.print("----------------------------------\n");
@@ -23,7 +23,7 @@ void loop()
     interpreter->tick();
 }
 
-void yield()  // we do not need eventresponder or Serial events here...
+void yield() // we do not need eventresponder or Serial events here...
 {
-   TeensyTimerTool::tick();
+    TeensyTimerTool::tick();
 }

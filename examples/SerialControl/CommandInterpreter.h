@@ -7,13 +7,13 @@
 class CommandInterpreter
 {
  public:
-    CommandInterpreter(SimulatorStateMachine* statemachine) : sm(statemachine){}
+    CommandInterpreter(SimulatorStateMachine* statemachine) : sm(statemachine) {}
 
     void begin()
     {
-        serialCommand.addCommand("mva",  [this] { this->mva(); });
-        serialCommand.addCommand("mvr",  [this] { this->mvr(); });
-        serialCommand.addCommand("up",   [this] { this->up(); });
+        serialCommand.addCommand("mva", [this] { this->mva(); });
+        serialCommand.addCommand("mvr", [this] { this->mvr(); });
+        serialCommand.addCommand("up", [this] { this->up(); });
         serialCommand.addCommand("down", [this] { this->down(); });
         serialCommand.addCommand("stop", [this] { this->stop(); });
         serialCommand.addCommand("getpos", [this] { this->getpos(); });
@@ -23,11 +23,12 @@ class CommandInterpreter
         serialCommand.addCommand("btot", [this] { this->btotal(); });
         serialCommand.addCommand("bmin", [this] { this->bmin(); });
         serialCommand.addCommand("bmax", [this] { this->bmax(); });
+        serialCommand.addCommand("period", [this] { this->period(); });
 
         serialCommand.addCommand("print", [this] { this->print(); });
         serialCommand.addCommand("help", [this] { this->help(); });
         serialCommand.addCommand("?", [this] { this->help(); });
-        serialCommand.setDefaultHandler([](const char* cmd){Serial.printf("Command Error: %s\n", cmd);});
+        serialCommand.setDefaultHandler([](const char* cmd) { Serial.printf("Command Error: %s\n", cmd); });
 
         help();
 
@@ -55,6 +56,7 @@ class CommandInterpreter
     void bmax();
     void print();
     void help();
+    void period();
 
     SerialCommand serialCommand;
 
@@ -147,6 +149,13 @@ void CommandInterpreter::bmax()
     sm->setBounceMax(t);
 }
 
+void CommandInterpreter::period()
+{
+    int p = abs(getIntParam());
+    Serial.printf("> period %d\n", p);    
+    sm->setPeriod(p);
+}
+
 void CommandInterpreter::print()
 {
     Serial.printf("> print\n");
@@ -164,6 +173,7 @@ void CommandInterpreter::help()
     Serial.println("  getpos     Show current position");
     Serial.println("  setpos pos Set current position to new value without generating output");
     Serial.println("  freq f     Set frequency to f; unit: Hz; default: 100");
+    Serial.println("  period p   Set period for index pulses; unit: counts; default: 100");
     Serial.println("  phase p    Set phase; unit: deg; default: 90");
     Serial.println("  btot       Set total bouncing time; unit: \u00B5s, (0 disables bouncing); default: 0");
     Serial.println("  bmin       Set shortest duration of bouncing peaks; unit: \u00B5s, default: 50");
