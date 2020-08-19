@@ -10,6 +10,7 @@ EncSim is a library for the PJRC Teensy ARM boards (T3.0 - T3.6, T4.0, T4.1). It
 - Easy to use interface to control signal generation with a serial terminal.
 - Count frequency adjustable.
 - Signal phase adjustable from 90° (standard) to 10°.
+- Generates index pulses with settable distance for e.g., simulating rotary encoders with index signal.
 - Bouncing:
   - Total bounce time adjustable.
   - Minimum width of random bounce peaks adjustable.
@@ -17,7 +18,7 @@ EncSim is a library for the PJRC Teensy ARM boards (T3.0 - T3.6, T4.0, T4.1). It
 - Programming API for use in own sketches, automated tests or simular applications.
 
 **Precompiled Firmware** 
-If you just want to use EncSym for testing your encoder library you do not need to install EncSim. You can download precompiled hex files for various Teensy boards instead. Just upload the firmware, open a serial terminal (arduinos serial monitor, [TyCommander](https://github.com/Koromix/tytools),  [PuTTY](http://www.putty.org/), ...) and start testing. Precompiled firmware for various boards can be downloaded from here https://github.com/luni64/EncSim/releases.
+If you just want to use EncSym for testing your encoder library you do not need to install EncSim. You can download precompiled hex files for various Teensy boards instead. Just upload the firmware, open a serial terminal (arduinos serial monitor, [TyCommander](https://github.com/Koromix/tytools),  [PuTTY](http://www.putty.org/), ...) and start testing. Precompiled firmware for various boards can be downloaded from [here](https://github.com/luni64/EncSim/examples/SerialControl/precompiled_binaries).
 
 
 ### Examples of generated signals
@@ -55,7 +56,7 @@ Typing in *help* or *?* in the terminal shows a list of all available commands:
 - *mva* and *mvr* 'move' to a given absolute or relative position respectively. Current counter value is printed during amd after the move.
 - Each move command can be intercepted by *stop* or other move commands. E.g., sending *up* followed by *down* will change the direction of the signal immediately. Sending *up* followed by *mva 0* will change direction and move back to position 0.
 - *getpos* and *setpos* get and set the current counter value
-- *freq*, *phase*, *btot*, *bmin* and *bmax* set pulse rate, phase, total bounce time, minimal and maximal bounce pulse width respectively.
+- *freq*, *phase*, *btot*, *bmin*, *bmax*  and period set pulse rate, phase, total bounce time, minimal and maximal bounce pulse width and index pulse period respectively.
 - *print* shows the current settings.  Please note: the library clips the frequency and phase settings if the requested signal can not be generated with the given board. It is a good idea to check the actual settings with *print* if you use high frequencies and/or small phases settings.
 
 # API
@@ -84,6 +85,7 @@ setPhase(deg)               // signal phase in deg (10-90)
 setTotalBounceDuration(µs)  // total duration of bouncing phase in µs
 setBounceDurationMin(µs)    // minimum peak width of a bouncing peak
 setBounceDurationMax(µs)    // maximum peak width of a bouncing peak
+setPeriod(steps)            // distance in steps between the index pulses (-1 disables index pulses)
 ```
 The following commands handle signal generation
 ```c++
