@@ -104,7 +104,7 @@ EncSim& EncSim::setCountRate(float f_Hz, float phase_deg)
     constexpr float minPhase = 5.f;  // deg
     constexpr float maxPhase = 90.f; // deg
     constexpr float minFreq = 0.2f;  // Hz
-    constexpr float maxFreq = 1E6f;  // Hz
+    constexpr float maxFreq = 2E6f;  // Hz
 
     float freq = std::max(minFreq, std::min(maxFreq, f_Hz));
     float halfPeriod = 1'000'000 / freq; //µs

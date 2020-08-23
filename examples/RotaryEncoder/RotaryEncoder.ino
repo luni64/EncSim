@@ -2,7 +2,7 @@
 
 EncSim encSim(0, 1, 2);           // A=0, B=1, Z=2
 
-constexpr float rpm  = 150;       // revolutions per minute
+constexpr float rpm  = 800;       // revolutions per minute
 constexpr float ppr  = 32768;     // encoder pulses per revolution
 constexpr float rps  = rpm / 60;  // revolution per second11
 constexpr float freq = rps * ppr; // count frequency
@@ -19,8 +19,8 @@ void setup()
 
     encSim
         .begin()
-        .setFrequency(freq)         // 500000 Counts per second / equals [A&B freq == 117,2kHz] [Z freq 14,3Hz = 859rpm]
-        .setPeriod(ppr)             // Index pulse every 32768 counts [X4 mode]
+        .setFrequency(freq)         // calculated above
+        .setPeriod(ppr)             // set above
         .setPhase(90)               // 90° phase signal
         .setTotalBounceDuration(0); // no bouncing
 
