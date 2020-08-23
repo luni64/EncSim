@@ -4,12 +4,15 @@
 #include "TeensyTimerTool.h"
 #include <algorithm>
 
+using TimerGen = TeensyTimerTool::TimerGenerator* const;
+
 class EncSim
 {
  public:
-    EncSim(unsigned pinA, unsigned pinB, int pinZ=-1);    
+    EncSim(unsigned pinA, unsigned pinB, unsigned pinZ = UINT32_MAX);
 
-    void begin();
+    //void begin(unsigned pinA, unsigned pinB, int pinZ=-1);
+    EncSim& begin();
 
     void moveAbsAsync(int _target); // start absolute move and return immediately
     void moveRelAsync(int delta);   // start relative move and return immediately
@@ -30,15 +33,19 @@ class EncSim
     EncSim& setBounceDurationMin(unsigned microseconds);
     EncSim& setBounceDurationMax(unsigned microseconds);
 
- protected:
-    int direction;
-    int target;
+
+    protected:
 
     void pitISR()
     {
         current += direction;
+        if (current == target)
+        {
+            stop();
+        } else
+            mainTimer.update(T[current & 1]); //T0 / T1 differ if phase != 90°
 
-        if (Z > 0)
+        if (Z < UINT32_MAX)
         {
             digitalWriteFast(Z, ((current  - 2) % period) == 0);  // current-2 to have the zero pulse on the rising edge of B
         }
@@ -49,28 +56,20 @@ class EncSim
         } else
         {
             direction == 1 ? phaseB.toggle() : phaseA.toggle();
-        }      
-
-        if (current == target)
-        {
-            mainTimer.stop();
-            running = false;
-        } else
-            mainTimer.trigger((unsigned)T[current & 1]); //T0 / T1 differ if phase != 90°
+        }
     }
 
-    float frequency = 100;
-    float phase     = 90;
+    int direction;
+    int target;
+
+    float frequency;
+    float phase;
     float T[2];
     bool running = false;
 
-    const unsigned A;
-    const unsigned B;
-    const int Z;
-    unsigned period = 100;
+    unsigned A, B, Z;
+    unsigned period;
 
-    BouncingPin phaseA;
-    BouncingPin phaseB;
-
-    TeensyTimerTool::OneShotTimer mainTimer;
+    BouncingPin phaseA, phaseB;
+    IntervalTimer mainTimer;
 };

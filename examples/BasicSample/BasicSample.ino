@@ -1,4 +1,3 @@
-#include "TeensyTimerTool.h"
 #include "EncSim.h"
 
 EncSim simulator(0,1);       // use pin 0 and pin 1 as output

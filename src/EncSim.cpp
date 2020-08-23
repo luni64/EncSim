@@ -1,19 +1,26 @@
 #include "EncSim.h"
 
+static EncSim* This; // hack, allows one instance only
 
-EncSim::EncSim(unsigned pinA, unsigned pinB, int pinZ)
-    : A(pinA), B(pinB), Z(pinZ), mainTimer(TeensyTimerTool::TCK)
+EncSim::EncSim(unsigned pinA, unsigned pinB, unsigned pinZ)
 {
+    This = this;
+    this->A = pinA;
+    this->B = pinB;
+    this->Z = pinZ;
 }
 
-void EncSim::begin()
+EncSim& EncSim::begin(/*unsigned pinA, unsigned pinB, int pinZ*/)
 {
-    mainTimer.begin([this] { this->pitISR(); });
+    //CCM_CSCMR1 &= ~CCM_CSCMR1_PERCLK_CLK_SEL; // set PIT clock to 150MHz
 
     phaseA.begin(A);
     phaseB.begin(B);
-    pinMode(Z,OUTPUT);
-    digitalWriteFast(Z,LOW);
+    if (Z < UINT32_MAX)
+    {
+        pinMode(Z, OUTPUT);
+        digitalWriteFast(Z, LOW);
+    }
 
     // defaults
     setFrequency(100);         // Quadrature signal with
@@ -24,6 +31,7 @@ void EncSim::begin()
     setPeriod(100);            // index pulse every 100 steps
 
     current = 0; // reset counter
+    return *this;
 }
 
 void EncSim::moveAbsAsync(int _target)
@@ -34,14 +42,14 @@ void EncSim::moveAbsAsync(int _target)
     target = _target;
     direction = (target >= current) ? 1 : -1;
 
-    //Serial.printf("mmva %d\n",(unsigned) T[current & 1]);
-    mainTimer.trigger((unsigned)T[current & 1]);
+    if (!running)
+        mainTimer.begin([] { This->pitISR(); }, T[current & 1]);
     running = true;
 }
 
 // start relative move and return immediately
 void EncSim::moveRelAsync(int delta)
-{   
+{
     moveAbsAsync(current + delta);
 }
 
@@ -64,7 +72,7 @@ void EncSim::moveRel(int delta)
 // stop movement
 void EncSim::stop()
 {
-    mainTimer.stop();
+    mainTimer.end();
     running = false;
 }
 
@@ -73,7 +81,7 @@ bool EncSim::isRunning()
     return running;
 }
 
-EncSim &EncSim::setFrequency(float f_Hz)
+EncSim& EncSim::setFrequency(float f_Hz)
 {
     frequency = f_Hz;
     return setCountRate(frequency, phase);
@@ -85,13 +93,13 @@ EncSim& EncSim::setPeriod(unsigned p)
     return *this;
 }
 
-EncSim &EncSim::setPhase(float deg)
+EncSim& EncSim::setPhase(float deg)
 {
     phase = deg;
     return setCountRate(frequency, phase);
 }
 
-EncSim &EncSim::setCountRate(float f_Hz, float phase_deg)
+EncSim& EncSim::setCountRate(float f_Hz, float phase_deg)
 {
     constexpr float minPhase = 5.f;  // deg
     constexpr float maxPhase = 90.f; // deg
@@ -111,28 +119,28 @@ EncSim &EncSim::setCountRate(float f_Hz, float phase_deg)
     return *this;
 }
 
-EncSim &EncSim::setTotalBounceDuration(unsigned microseconds)
+EncSim& EncSim::setTotalBounceDuration(unsigned microseconds)
 {
     phaseA.totalBounceTime = microseconds;
     phaseB.totalBounceTime = microseconds;
     return *this;
 }
 
-EncSim &EncSim::setBounceDurationMin(unsigned microseconds)
+EncSim& EncSim::setBounceDurationMin(unsigned microseconds)
 {
     phaseA.minBounceTime = microseconds;
     phaseB.minBounceTime = microseconds;
     return *this;
 }
 
-EncSim &EncSim::setBounceDurationMax(unsigned microseconds)
+EncSim& EncSim::setBounceDurationMax(unsigned microseconds)
 {
     phaseA.maxBounceTime = microseconds;
     phaseB.maxBounceTime = microseconds;
     return *this;
 }
 
-void EncSim::printSettings(Stream &s)
+void EncSim::printSettings(Stream& s)
 {
     float phase = 180.0 * T[0] / (T[1] + T[0]);
 

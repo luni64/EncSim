@@ -1,17 +1,15 @@
 #pragma once
 
-//#include <TeensyDelay.h>
 #include "TeensyTimerTool.h"
 #include "wprogram.h"
 
 class BouncingPin
 {
  public:
-    // BouncingPin(unsigned pin) :bounceTimer(TeensyTimerTool::TCK) {}
+    BouncingPin() :bounceTimer(TeensyTimerTool::TCK) {}
 
     void begin(unsigned pin)
     {
-        //Serial.printf("bbeg %d\n", pin);
         this->pin = pin;
         pinMode(pin, OUTPUT);
         digitalWriteFast(pin, LOW);
