@@ -7,7 +7,7 @@ void setup()
     encSim
         .begin()
         .setFrequency(10'000)       // 10 kCounts per second
-        .setPeriod(100)             // Index pulse every 4096 counts
+        .setPeriod(4096)            // Index pulse every 4096 counts
         .setPhase(40)               // 40° phase signal
         .setTotalBounceDuration(0); // no bouncing
 
