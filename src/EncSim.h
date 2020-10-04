@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BouncingPin.h"
+#include "IntervalTimerEx.h"
 #include "TeensyTimerTool.h"
 #include <algorithm>
 
@@ -33,9 +34,7 @@ class EncSim
     EncSim& setBounceDurationMin(unsigned microseconds);
     EncSim& setBounceDurationMax(unsigned microseconds);
 
-
-    protected:
-
+ protected:
     void pitISR()
     {
         current += direction;
@@ -47,7 +46,7 @@ class EncSim
 
         if (Z < UINT32_MAX)
         {
-            digitalWriteFast(Z, ((current  - 2) % period) == 0);  // current-2 to have the zero pulse on the rising edge of B
+            digitalWriteFast(Z, ((current - 2) % period) == 0); // current-2 to have the zero pulse on the rising edge of B
         }
 
         if (current & 1)
@@ -71,5 +70,5 @@ class EncSim
     unsigned period;
 
     BouncingPin phaseA, phaseB;
-    IntervalTimer mainTimer;
+    IntervalTimerEx mainTimer;
 };

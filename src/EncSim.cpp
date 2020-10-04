@@ -1,10 +1,8 @@
 #include "EncSim.h"
 
-static EncSim* This; // hack, allows one instance only
 
 EncSim::EncSim(unsigned pinA, unsigned pinB, unsigned pinZ)
 {
-    This = this;
     this->A = pinA;
     this->B = pinB;
     this->Z = pinZ;
@@ -12,8 +10,6 @@ EncSim::EncSim(unsigned pinA, unsigned pinB, unsigned pinZ)
 
 EncSim& EncSim::begin(/*unsigned pinA, unsigned pinB, int pinZ*/)
 {
-    //CCM_CSCMR1 &= ~CCM_CSCMR1_PERCLK_CLK_SEL; // set PIT clock to 150MHz
-
     phaseA.begin(A);
     phaseB.begin(B);
     if (Z < UINT32_MAX)
@@ -43,7 +39,7 @@ void EncSim::moveAbsAsync(int _target)
     direction = (target >= current) ? 1 : -1;
 
     if (!running)
-        mainTimer.begin([] { This->pitISR(); }, T[current & 1]);
+        mainTimer.begin([this] {pitISR(); }, T[current & 1]);
     running = true;
 }
 
