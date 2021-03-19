@@ -136,6 +136,12 @@ EncSim& EncSim::setBounceDurationMax(unsigned microseconds)
     return *this;
 }
 
+EncSim& EncSim::setContinousMode(bool contMode)
+{
+    continousMode = contMode;
+    return *this;
+}
+
 void EncSim::printSettings(Stream& s)
 {
     float phase = 180.0 * T[0] / (T[1] + T[0]);

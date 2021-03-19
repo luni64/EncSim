@@ -33,12 +33,13 @@ class EncSim
     EncSim& setTotalBounceDuration(unsigned microseconds);
     EncSim& setBounceDurationMin(unsigned microseconds);
     EncSim& setBounceDurationMax(unsigned microseconds);
+    EncSim& setContinousMode(bool on = true);  // true -> continous mode, false->target mode (default)
 
  protected:
     void pitISR()
     {
         current += direction;
-        if (current == target)
+        if (current == target && !continousMode )
         {
             stop();
         } else
@@ -65,6 +66,7 @@ class EncSim
     float phase;
     float T[2];
     bool running = false;
+    bool continousMode = false;
 
     unsigned A, B, Z;
     unsigned period;
