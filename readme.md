@@ -18,7 +18,7 @@ EncSim is a library for the PJRC Teensy ARM boards (T3.0 - T3.6, T4.0, T4.1). It
 - Programming API for use in own sketches, automated tests or simular applications.
 
 **Precompiled Firmware** 
-If you just want to use EncSym for testing your encoder library you do not need to install EncSim. You can download precompiled hex files for various Teensy boards instead. Just upload the firmware, open a serial terminal (arduinos serial monitor, [TyCommander](https://github.com/Koromix/tytools),  [PuTTY](http://www.putty.org/), ...) and start testing. Precompiled firmware for various boards can be downloaded from [here](https://github.com/luni64/EncSim/examples/SerialControl/precompiled_binaries).
+If you just want to use EncSym for testing your encoder library you do not need to install EncSim. You can download precompiled hex files for various Teensy boards instead. Just upload the firmware, open a serial terminal (arduinos serial monitor, [TyCommander](https://github.com/Koromix/tytools),  [PuTTY](http://www.putty.org/), ...) and start testing. Precompiled firmware for various boards can be downloaded from [here](https://github.com/luni64/EncSim/tree/master/examples/SerialControl/precompiled_binaries).
 
 
 ### Examples of generated signals
